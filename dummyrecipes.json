@@ -1,0 +1,87 @@
+{
+    "recipes": [
+        {
+            "name": "pannekoekenmix",
+            "image_url": "sample.png",
+            "ingredients": [
+                "1 cup all-purpose flour",
+                "2 eggs",
+                "1 cup milk",
+                "2 tablespoons melted butter",
+                "Pinch of salt"
+            ],
+            "instructions": [
+                "In a mixing bowl, combine flour and salt.",
+                "In another bowl, whisk together eggs, milk, and melted butter.",
+                "Gradually add the wet ingredients to the dry ingredients, stirring until smooth.",
+                "Heat a non-stick skillet over medium heat and lightly grease with butter or oil.",
+                "Pour a small amount of batter into the skillet and tilt to spread evenly.",
+                "Cook until bubbles form on the surface, then flip and cook the other side until golden brown.",
+                "Repeat with the remaining batter.",
+                "Serve warm with your favorite toppings."
+            ]
+        },
+        {
+            "name": "pasta",
+            "image_url": "sample.png",
+            "ingredients": [
+                "8 oz pasta of your choice",
+                "2 cups marinara sauce",
+                "1/2 cup grated Parmesan cheese",
+                "1/4 cup chopped fresh basil",
+                "Salt and pepper to taste"
+            ],
+            "instructions": [
+                "Cook pasta according to package instructions until al dente. Drain and set aside.",
+                "In a saucepan, heat marinara sauce over medium heat until warmed through.",
+                "Add cooked pasta to the saucepan and toss to coat.",
+                "Season with salt and pepper to taste.",
+                "Divide pasta among serving plates and sprinkle with grated Parmesan cheese and chopped basil.",
+                "Serve hot and enjoy!"
+            ]
+        },
+        {
+            "name": "stir-fry",
+            "image_url": "sample.png",
+            "ingredients": [
+                "2 cups mixed vegetables (bell peppers, broccoli, carrots, snap peas, etc.)",
+                "1 lb boneless chicken breast, sliced thinly",
+                "3 tablespoons soy sauce",
+                "2 tablespoons oyster sauce",
+                "2 cloves garlic, minced",
+                "1 tablespoon ginger, minced",
+                "2 tablespoons vegetable oil",
+                "Cooked rice, for serving"
+            ],
+            "instructions": [
+                "In a small bowl, mix together soy sauce and oyster sauce. Set aside.",
+                "Heat vegetable oil in a large skillet or wok over high heat.",
+                "Add minced garlic and ginger, sauté for 30 seconds until fragrant.",
+                "Add sliced chicken breast to the skillet and cook until no longer pink.",
+                "Add mixed vegetables to the skillet and stir-fry for 3-4 minutes until crisp-tender.",
+                "Pour the soy sauce mixture over the chicken and vegetables. Stir well to combine.",
+                "Continue cooking for another 2-3 minutes until the sauce thickens slightly.",
+                "Remove from heat and serve hot over cooked rice."
+            ]
+        },
+        {
+            "name": "grilled cheese sandwich",
+            "image_url": "sample.png",
+            "ingredients": [
+                "4 slices bread",
+                "4 slices cheddar cheese",
+                "2 tablespoons butter"
+            ],
+            "instructions": [
+                "Preheat a skillet or griddle over medium heat.",
+                "Spread butter evenly on one side of each slice of bread.",
+                "Place two slices of bread, buttered side down, onto the skillet.",
+                "Top each slice of bread with 2 slices of cheddar cheese.",
+                "Place the remaining slices of bread on top, buttered side facing up.",
+                "Cook for 3-4 minutes until the bottom is golden brown and the cheese starts to melt.",
+                "Carefully flip the sandwiches and cook for another 3-4 minutes until the other side is golden brown and the cheese is completely melted.",
+                "Remove from heat and serve immediately."
+            ]
+        }
+    ]
+}

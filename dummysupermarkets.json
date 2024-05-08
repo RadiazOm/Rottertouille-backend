@@ -1,0 +1,24 @@
+{
+    "supermarkets": [
+        {
+            "name": "aldi",
+            "image_url": "sample.png"
+        },
+        {
+            "name": "jumbo",
+            "image_url": "sample.png"
+        },
+        {
+            "name": "albert heijn",
+            "image_url": "sample.png"
+        },
+        {
+            "name": "dirk van den broek",
+            "image_url": "sample.png"
+        },
+        {
+            "name": "lidl",
+            "image_url": "sample.png"
+        }
+    ]
+}

@@ -1,0 +1,100 @@
+{
+    "products": [
+        {
+            "name": "ham",
+            "category": "vlees en vis",
+            "supermarket": "jumbo",
+            "price": 3.29,
+            "discount": 1.09,
+            "image_url": "sample.png"
+        },
+        {
+            "name": "tonijn",
+            "category": "vlees en vis",
+            "supermarket": "aldi",
+            "price": 2.76,
+            "discount": 0.76,
+            "image_url": "sample.png"
+        },
+        {
+            "name": "brocolli",
+            "category": "groente en fruit",
+            "supermarket": "albert heijn",
+            "price": 1.09,
+            "discount": 0,
+            "image_url": "sample.png"
+        },
+        {
+            "name": "banaan",
+            "category": "groente en fruit",
+            "supermarket": "dirk",
+            "price": 1.45,
+            "discount": 0.55,
+            "image_url": "sample.png"
+        },
+        {
+            "name": "worstenbroodje",
+            "category": "brood en gebak",
+            "supermarket": "jumbo",
+            "price": 3.55,
+            "discount": 0,
+            "image_url": "sample.png"
+        },
+        {
+            "name": "sinaasappelsap",
+            "category": "frisdrank en sappen",
+            "supermarket": "lidl",
+            "price": 2.25,
+            "discount": 0,
+            "image_url": "sample.png"
+        },
+        {
+            "name": "melk",
+            "category": "zuivel en eieren",
+            "supermarket": "albert heijn",
+            "price": 0.99,
+            "discount": 0.20,
+            "image_url": "sample.png"
+        },
+        {
+            "name": "yoghurt",
+            "category": "zuivel en eieren",
+            "supermarket": "aldi",
+            "price": 1.85,
+            "discount": 0.15,
+            "image_url": "sample.png"
+        },
+        {
+            "name": "kaas",
+            "category": "zuivel en eieren",
+            "supermarket": "dirk",
+            "price": 2.59,
+            "discount": 0.60,
+            "image_url": "sample.png"
+        },
+        {
+            "name": "komkommer",
+            "category": "groente en fruit",
+            "supermarket": "lidl",
+            "price": 0.50,
+            "discount": 0,
+            "image_url": "sample.png"
+        },
+        {
+            "name": "hagelslag",
+            "category": "brood en gebak",
+            "supermarket": "jumbo",
+            "price": 2.10,
+            "discount": 0.30,
+            "image_url": "sample.png"
+        },
+        {
+            "name": "koffie",
+            "category": "koffie en thee",
+            "supermarket": "aldi",
+            "price": 3.79,
+            "discount": 0.50,
+            "image_url": "sample.png"
+        }
+    ]
+}
