@@ -1,6 +1,6 @@
 
 export default class Pagination {
-    static format(items, query) {
+    static format(items, query, route) {
         let start = 1;
         let limit = NaN;
         let total = items.length
@@ -23,19 +23,19 @@ export default class Pagination {
             _links: {
                 first: {
                     page: this.itemToPageNumber(total, start, limit, this.firstPageItem(total, start, limit)),
-                    href: `${process.env.EXPRESS_URI}:${process.env.EXPRESS_PORT}/resource/${this.getFirstQueryString(total, start, limit)}`
+                    href: `${process.env.EXPRESS_URI}:${process.env.EXPRESS_PORT}/${route}/${this.getFirstQueryString(total, start, limit)}`
                 },
                 last: {
                     page: this.itemToPageNumber(total, start, limit, this.lastPageItem(total, start, limit)),
-                    href: `${process.env.EXPRESS_URI}:${process.env.EXPRESS_PORT}/resource/${this.getLastQueryString(total, start, limit)}`
+                    href: `${process.env.EXPRESS_URI}:${process.env.EXPRESS_PORT}/${route}/${this.getLastQueryString(total, start, limit)}`
                 },
                 previous: {
                     page: this.itemToPageNumber(total, start, limit, this.previousPageItem(total, start, limit)),
-                    href: `${process.env.EXPRESS_URI}:${process.env.EXPRESS_PORT}/resource/${this.getPreviousQueryString(total, start, limit)}`
+                    href: `${process.env.EXPRESS_URI}:${process.env.EXPRESS_PORT}/${route}/${this.getPreviousQueryString(total, start, limit)}`
                 },
                 next: {
                     page: this.itemToPageNumber(total, start, limit, this.nextPageItem(total, start, limit)),
-                    href: `${process.env.EXPRESS_URI}:${process.env.EXPRESS_PORT}/resource/${this.getNextQueryString(total, start, limit)}`
+                    href: `${process.env.EXPRESS_URI}:${process.env.EXPRESS_PORT}/${route}/${this.getNextQueryString(total, start, limit)}`
                 }
             }
         };

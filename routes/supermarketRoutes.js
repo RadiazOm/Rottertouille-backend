@@ -1,5 +1,6 @@
 import express from "express";
 import dummy from '../dummysupermarkets.json' assert { type: 'json' };
+import Pagination from "../pagination/Pagination.js";
 
 const routes = express.Router()
 
@@ -31,7 +32,15 @@ routes.use((req, res, next) => {
 // Get all the supermarkets
 routes.get('/', (req, res) => {
     console.log(dummy)
-    res.json(dummy)
+
+    const pagination = Pagination.format(dummy.supermarkets, req.query, 'supermarkets')
+
+    const items = formatJSON(dummy.supermarkets, req.query)
+
+    res.json({
+        supermarkets: items,
+        pagination: pagination
+    })
 })
 
 // Get all the products with a filter
@@ -47,9 +56,34 @@ routes.post('/search', (req, res) => {
     
     const result = dummy.supermarkets.filter((item) => {return item.name.includes(filter)})
 
+    const pagination = Pagination.format(result, req.query, 'supermarkets/search')
+
+    const items = formatJSON(result, req.query)
+
     res.json({
-        supermarkets: result
+        supermarkets: items,
+        pagination: pagination
     })
 })
+
+function formatJSON(data, query) {
+    let JSON = [];
+    let start = query.start - 1
+    let limit = Math.min(data.length, query.limit)
+    if (isNaN(start) || start <= 0) {
+        start = 0
+    }
+    if (isNaN(limit)) {
+        limit = Pagination.currentItems(data.length, start, limit)
+    }
+    for (let i = start; i < Math.min(data.length, start + limit); i++) {
+        let newJson = {}
+        newJson.name = data[i].name
+        newJson.image_url = data[i].image_url
+        JSON.push(newJson)
+    }
+
+    return JSON
+}
 
 export default routes
