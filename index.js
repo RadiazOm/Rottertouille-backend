@@ -3,6 +3,7 @@ import 'dotenv/config';
 import productsRoutes from './routes/productsRoutes.js'
 import supermarketsRoutes from './routes/supermarketRoutes.js'
 import recipesRoutes from './routes/recipesRoutes.js'
+import imageRoute from './routes/image.js'
 
 
 
@@ -16,6 +17,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/products', productsRoutes)
 app.use('/supermarkets', supermarketsRoutes)
 app.use('/recipes', recipesRoutes)
+app.use('/image', imageRoute)
+
 
 
 // error handling
