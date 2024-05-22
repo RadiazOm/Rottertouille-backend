@@ -3,6 +3,7 @@ const { Schema } = mongoose
 
 const productSchema = new Schema({
     name: String,
+    weight: String,
     category: [
         { type: Schema.Types.ObjectId, ref: 'Category'} // foreign key
     ], 
