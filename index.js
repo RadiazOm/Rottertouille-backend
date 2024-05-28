@@ -5,6 +5,7 @@ import productsRoutes from './routes/productsRoutes.js'
 import supermarketsRoutes from './routes/supermarketRoutes.js'
 import recipesRoutes from './routes/recipesRoutes.js'
 import imageRoute from './routes/image.js'
+import seedRoute from './routes/seeder.js'
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // routes
+app.use('/seed', seedRoute)
 app.use('/products', productsRoutes)
 app.use('/supermarkets', supermarketsRoutes)
 app.use('/recipes', recipesRoutes)
