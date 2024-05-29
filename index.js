@@ -10,7 +10,7 @@ import seedRoute from './routes/seeder.js'
 const app = express();
 
 // connect to database
-mongoose.connect(process.env.DB_CONNECTION + process.env.DB_NAME);
+mongoose.connect(process.env.DB_CONNECTION + process.env.DB_NAME).then(() => {console.log('connected to database')});
 
 // body parsing
 app.use(express.json())
