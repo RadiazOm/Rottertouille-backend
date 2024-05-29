@@ -95,7 +95,7 @@ routes.post('/', async (req, res) => {
     for (let i = 0; i < 100; i++) {
         const product = await Product.create({
             name: faker.lorem.word({length: { min: 3, max: 10 }}),
-            weight: faker.number.int({ min: 50, max: 1000 }),
+            weight: faker.number.int({ min: 50, max: 1000 }) + 'g',
             category: [categories[Math.floor(Math.random()*categories.length)]._id],
             supermarket: supermarkets[Math.floor(Math.random()*supermarkets.length)]._id,
             price: faker.number.float({ min: 0.1, max: 10, fractionDigits: 2}),

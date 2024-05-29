@@ -1,6 +1,7 @@
 import express from "express";
 import dummy from '../dummyproducts.json' assert { type: 'json' };
 import Pagination from "../pagination/Pagination.js";
+import Product from "../models/products.js";
 
 const routes = express.Router()
 
@@ -30,12 +31,12 @@ routes.use((req, res, next) => {
 })
 
 // Get all the products
-routes.get('/', (req, res) => {
-    console.log(dummy)
+routes.get('/', async (req, res) => {
+    const products = await Product.find()
 
-    const pagination = Pagination.format(dummy.products, req.query, 'products')
+    const pagination = Pagination.format(products, req.query, 'products')
 
-    const items = formatJSON(dummy.products, req.query)
+    const items = formatJSON(products, req.query)
 
     res.json({
         products: items,
@@ -79,11 +80,13 @@ function formatJSON(data, query) {
     for (let i = start; i < Math.min(data.length, start + limit); i++) {
         let newJson = {}
         newJson.name = data[i].name
+        newJson.weight = data[i].weight
         newJson.category = data[i].category
         newJson.supermarket = data[i].supermarket
         newJson.price = data[i].price
         newJson.discount = data[i].discount
         newJson.image_url = data[i].image_url
+        newJson.createdAt = data[i].createdAt
         JSON.push(newJson)
     }
 

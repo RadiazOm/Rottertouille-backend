@@ -1,6 +1,7 @@
 import express from "express";
 import dummy from '../dummysupermarkets.json' assert { type: 'json' };
 import Pagination from "../pagination/Pagination.js";
+import Supermarket from "../models/supermarket.js";
 
 const routes = express.Router()
 
@@ -30,12 +31,12 @@ routes.use((req, res, next) => {
 })
 
 // Get all the supermarkets
-routes.get('/', (req, res) => {
-    console.log(dummy)
+routes.get('/', async (req, res) => {
+    const supermarkets = await Supermarket.find()
 
-    const pagination = Pagination.format(dummy.supermarkets, req.query, 'supermarkets')
+    const pagination = Pagination.format(supermarkets, req.query, 'supermarkets')
 
-    const items = formatJSON(dummy.supermarkets, req.query)
+    const items = formatJSON(supermarkets, req.query)
 
     res.json({
         supermarkets: items,
@@ -80,6 +81,7 @@ function formatJSON(data, query) {
         let newJson = {}
         newJson.name = data[i].name
         newJson.image_url = data[i].image_url
+        newJson.createdAt = data[i].createdAt
         JSON.push(newJson)
     }
 
