@@ -2,7 +2,7 @@
 export default class Pagination {
     static format(items, query, route) {
         let start = 1;
-        let limit = NaN;
+        let limit = 20;
         let total = items.length
         if (query.start !== undefined) {
             start = query.start
