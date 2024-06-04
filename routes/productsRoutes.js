@@ -70,7 +70,7 @@ routes.post('/search', (req, res) => {
 function formatJSON(data, query) {
     let JSON = [];
     let start = query.start - 1
-    let limit = Math.min(data.length, query.limit)
+    let limit = Math.min(data.length, query.limit ?? 20)
     if (isNaN(start) || start <= 0) {
         start = 0
     }
