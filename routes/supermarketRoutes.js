@@ -44,6 +44,17 @@ routes.get('/', async (req, res) => {
     })
 })
 
+routes.get('/:id', async (req, res) => {
+
+    const supermarket = await Supermarket.findOne({'_id': req.params.id})
+
+    const items = formatJSON(supermarket, req.query)
+
+    res.json({
+        supermarket: items,
+    })
+})
+
 // Get all the products with a filter
 routes.post('/search', (req, res) => {
     if (Object.keys(req.body).length === 0) {
@@ -69,21 +80,30 @@ routes.post('/search', (req, res) => {
 
 function formatJSON(data, query) {
     let JSON = [];
-    let start = query.start - 1
-    let limit = Math.min(data.length, query.limit)
-    if (isNaN(start) || start <= 0) {
-        start = 0
-    }
-    if (isNaN(limit)) {
-        limit = Pagination.currentItems(data.length, start, limit)
-    }
-    for (let i = start; i < Math.min(data.length, start + limit); i++) {
+    if (typeof data == 'array') {
+        let start = query.start - 1
+        let limit = Math.min(data.length, query.limit)
+        if (isNaN(start) || start <= 0) {
+            start = 0
+        }
+        if (isNaN(limit)) {
+            limit = Pagination.currentItems(data.length, start, limit)
+        }
+        for (let i = start; i < Math.min(data.length, start + limit); i++) {
+            let newJson = {}
+            newJson.name = data[i].name
+            newJson.image_url = data[i].image_url
+            newJson.createdAt = data[i].createdAt
+            JSON.push(newJson)
+        }
+    } else {
         let newJson = {}
-        newJson.name = data[i].name
-        newJson.image_url = data[i].image_url
-        newJson.createdAt = data[i].createdAt
+        newJson.name = data.name
+        newJson.image_url = data.image_url
+        newJson.createdAt = data.createdAt
         JSON.push(newJson)
     }
+
 
     return JSON
 }
