@@ -1,12 +1,14 @@
 import express from "express";
-import dummy from '../dummysupermarkets.json' assert { type: 'json' };
+import dummy from '../dummysupermarkets.json' assert {type: 'json'};
 import Pagination from "../pagination/Pagination.js";
 import Supermarket from "../models/supermarket.js";
+import Product from "../models/products.js";
+import Products from "../models/products.js";
 
 const routes = express.Router()
 
 // cors stuff
-routes.options('/', function(req, res){
+routes.options('/', function (req, res) {
     res.header('Allow', 'GET');
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET');
@@ -15,7 +17,7 @@ routes.options('/', function(req, res){
 });
 
 // cors stuff
-routes.options('/search', function(req, res){
+routes.options('/search', function (req, res) {
     res.header('Allow', 'POST');
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'POST');
@@ -55,8 +57,30 @@ routes.get('/:id', async (req, res) => {
     })
 })
 
-routes.get('products/:id', (req, res) => {
+routes.get('/products/:id', async (req, res) => {
     //: TODO: pascal mag dit lekker maken
+    try {
+        const id = req.params.id;
+        console.log(id)
+        const supermarket = await Supermarket.findOne({'_id': id})
+        console.log(supermarket)
+        const products = await Products.find({"supermarket": supermarket})
+        console.log(products)
+        if (!products) {
+            res.status(404).send({message: "could not find"})
+            return;
+        }
+        const items = formatProductsJSON(products, req.query)
+        const pagination = Pagination.format(items, req.query, 'supermarkets/products/' + supermarket._id)
+
+        res.json({
+            products: items,
+            pagination: pagination
+        })
+
+    } catch (e) {
+        console.log(e)
+    }
 
     // product.find met supermarket id van parameter
 
@@ -80,8 +104,10 @@ routes.post('/search', (req, res) => {
     }
 
     const filter = req.body.query
-    
-    const result = dummy.supermarkets.filter((item) => {return item.name.includes(filter)})
+
+    const result = dummy.supermarkets.filter((item) => {
+        return item.name.includes(filter)
+    })
 
     const pagination = Pagination.format(result, req.query, 'supermarkets/search')
 
@@ -111,7 +137,7 @@ function formatJSON(data, query) {
         newJson.createdAt = data[i].createdAt
         JSON.push(newJson)
     }
-    
+
     return JSON
 }
 
@@ -123,6 +149,33 @@ function formatDetailJSON(data) {
     newJson.image_url = data.image_url
     newJson.createdAt = data.createdAt
     JSON.push(newJson)
+
+    return JSON
+}
+
+function formatProductsJSON(data, query) {
+    let JSON = [];
+    let start = query.start - 1
+    let limit = Math.min(data.length, query.limit ?? 20)
+    if (isNaN(start) || start <= 0) {
+        start = 0
+    }
+    if (isNaN(limit)) {
+        limit = Pagination.currentItems(data.length, start, limit)
+    }
+    for (let i = start; i < Math.min(data.length, start + limit); i++) {
+        let newJson = {}
+        newJson._id = data[i]._id
+        newJson.name = data[i].name
+        newJson.weight = data[i].weight
+        newJson.category = data[i].category
+        newJson.supermarket = data[i].supermarket
+        newJson.price = data[i].price
+        newJson.discount = data[i].discount
+        newJson.image_url = data[i].image_url
+        newJson.createdAt = data[i].createdAt
+        JSON.push(newJson)
+    }
 
     return JSON
 }
