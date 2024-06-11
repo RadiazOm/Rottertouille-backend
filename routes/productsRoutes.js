@@ -119,8 +119,8 @@ routes.post('/insert', async (req, res) => {
     }
 })
 
-routes.delete('/reset', (req, res) => {
-    Product.deleteMany()
+routes.delete('/reset', async (req, res) => {
+    await Product.deleteMany()
 
     res.send({
         message: 'deleted database'
