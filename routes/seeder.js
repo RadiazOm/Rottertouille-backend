@@ -46,7 +46,7 @@ routes.post('/', async (req, res) => {
     await Discount.deleteMany();
     await Category.deleteMany();
 
-    const supermarketsNames = ['lidl', 'dirk', 'ah', 'jumbo', 'aldi', 'spar', 'plus']
+    const supermarketsNames = ['lidl', 'dirk', 'ah', 'jumbo', 'spar', 'plus']
     const productImages = ['banana.png', 'apple.png', 'steak.png', 'carrot.png', 'ham.png', 'brocolli.png']
     const recipeImages = ['pancakes.png', 'burrito.png', 'pizza.png', 'pasta.png', 'lasagna.png']
     const supermarkets = []
