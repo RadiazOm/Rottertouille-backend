@@ -120,7 +120,9 @@ routes.post('/insert', async (req, res) => {
 })
 
 routes.delete('/reset', async (req, res) => {
-    await Product.deleteMany()
+    const reset = await Product.deleteMany()
+
+    console.log(reset)
 
     res.send({
         message: 'deleted database'
