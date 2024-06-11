@@ -48,7 +48,7 @@ routes.get('/:id', async (req, res) => {
 
     const recipe = await Recipe.findOne({'_id': req.params.id})
 
-    const items = formatJSON(recipe, req.query)
+    const items = formatDetailJSON(recipe)
 
     res.json({
         recipe: items,
@@ -80,33 +80,38 @@ routes.post('/search', (req, res) => {
 
 function formatJSON(data, query) {
     let JSON = [];
-    if (typeof data == 'array') {
-        let start = query.start - 1
-        let limit = Math.min(data.length, query.limit)
-        if (isNaN(start) || start <= 0) {
-            start = 0
-        }
-        if (isNaN(limit)) {
-            limit = Pagination.currentItems(data.length, start, limit)
-        }
-        for (let i = start; i < Math.min(data.length, start + limit); i++) {
-            let newJson = {}
-            newJson.name = data[i].name
-            newJson.ingredients = data[i].ingredients
-            newJson.instructions = data[i].instructions
-            newJson.image_url = data[i].image_url
-            newJson.createdAt = data[i].createdAt
-            JSON.push(newJson)
-        }
-    } else {
+    let start = query.start - 1
+    let limit = Math.min(data.length, query.limit)
+    if (isNaN(start) || start <= 0) {
+        start = 0
+    }
+    if (isNaN(limit)) {
+        limit = Pagination.currentItems(data.length, start, limit)
+    }
+    for (let i = start; i < Math.min(data.length, start + limit); i++) {
         let newJson = {}
-        newJson.name = data.name
-        newJson.ingredients = data.ingredients
-        newJson.instructions = data.instructions
-        newJson.image_url = data.image_url
-        newJson.createdAt = data.createdAt
+        newJson._id = data[i]._id
+        newJson.name = data[i].name
+        newJson.ingredients = data[i].ingredients
+        newJson.instructions = data[i].instructions
+        newJson.image_url = data[i].image_url
+        newJson.createdAt = data[i].createdAt
         JSON.push(newJson)
     }
+
+    return JSON
+}
+
+function formatDetailJSON(data) {
+    let JSON = []
+    let newJson = {}
+    newJson._id = data._id
+    newJson.name = data.name
+    newJson.ingredients = data.ingredients
+    newJson.instructions = data.instructions
+    newJson.image_url = data.image_url
+    newJson.createdAt = data.createdAt
+    JSON.push(newJson)
 
     return JSON
 }

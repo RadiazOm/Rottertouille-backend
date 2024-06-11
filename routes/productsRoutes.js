@@ -50,7 +50,7 @@ routes.get('/:id', async (req, res) => {
 
     console.log(product)
 
-    const items = formatJSON(product, req.query)
+    const items = formatDetailJSON(product)
 
     res.json({
         product: items,
@@ -80,43 +80,84 @@ routes.post('/search', (req, res) => {
     })
 })
 
+routes.post('/insert', async (req, res) => {
+    if (Object.keys(req.body).length === 0) {
+        res.status(400).json({
+            message: 'invalid format: body is empty.'
+        })
+        return
+    }
+
+    try {
+        const product = await Product.create({
+            name: req.body.name,
+            weight: req.body.weight || null,
+            category: '665ee6969d5b940bead288d2',
+            supermarket: req.body.supermarket || null,
+            price: req.body.price,
+            discount: req.body.discount || null,
+            image_url: req.body.image_url
+        })
+
+        res.json({
+            product: product
+        })
+    } catch (error) {
+        console.log('wuh oh something went very wrong: ' + error)
+        res.status(500).json({
+            message: 'uh oh something went wrong'
+        })
+    }
+})
+
+routes.delete('/reset', (req, res) => {
+    Product.deleteMany()
+
+    res.send({
+        message: 'deleted database'
+    })
+})
+
 function formatJSON(data, query) {
     let JSON = [];
-    if (typeof data == 'array') {
-        let start = query.start - 1
-        let limit = Math.min(data.length, query.limit ?? 20)
-        if (isNaN(start) || start <= 0) {
-            start = 0
-        }
-        if (isNaN(limit)) {
-            limit = Pagination.currentItems(data.length, start, limit)
-        }
-        for (let i = start; i < Math.min(data.length, start + limit); i++) {
-            let newJson = {}
-            newJson._id = data[i]._id
-            newJson.name = data[i].name
-            newJson.weight = data[i].weight
-            newJson.category = data[i].category
-            newJson.supermarket = data[i].supermarket
-            newJson.price = data[i].price
-            newJson.discount = data[i].discount
-            newJson.image_url = data[i].image_url
-            newJson.createdAt = data[i].createdAt
-            JSON.push(newJson)
-        }
-    } else {
+    let start = query.start - 1
+    let limit = Math.min(data.length, query.limit ?? 20)
+    if (isNaN(start) || start <= 0) {
+        start = 0
+    }
+    if (isNaN(limit)) {
+        limit = Pagination.currentItems(data.length, start, limit)
+    }
+    for (let i = start; i < Math.min(data.length, start + limit); i++) {
         let newJson = {}
-        newJson._id = data._id
-        newJson.name = data.name
-        newJson.weight = data.weight
-        newJson.category = data.category
-        newJson.supermarket = data.supermarket
-        newJson.price = data.price
-        newJson.discount = data.discount
-        newJson.image_url = data.image_url
-        newJson.createdAt = data.createdAt
+        newJson._id = data[i]._id
+        newJson.name = data[i].name
+        newJson.weight = data[i].weight
+        newJson.category = data[i].category
+        newJson.supermarket = data[i].supermarket
+        newJson.price = data[i].price
+        newJson.discount = data[i].discount
+        newJson.image_url = data[i].image_url
+        newJson.createdAt = data[i].createdAt
         JSON.push(newJson)
     }
+
+    return JSON
+}
+
+function formatDetailJSON(data) {
+    let JSON = []
+    let newJson = {}
+    newJson._id = data._id
+    newJson.name = data.name
+    newJson.weight = data.weight
+    newJson.category = data.category
+    newJson.supermarket = data.supermarket
+    newJson.price = data.price
+    newJson.discount = data.discount
+    newJson.image_url = data.image_url
+    newJson.createdAt = data.createdAt
+    JSON.push(newJson)
 
     return JSON
 }
