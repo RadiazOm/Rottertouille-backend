@@ -55,6 +55,20 @@ routes.get('/:id', async (req, res) => {
     })
 })
 
+routes.get('products/:id', (req, res) => {
+    //: TODO: pascal mag dit lekker maken
+
+    // product.find met supermarket id van parameter
+
+    // pagination
+
+    // format
+
+    // send
+
+    // error handling
+})
+
 // Get all the products with a filter
 // TODO: CONNECT WITH DATABASE
 routes.post('/search', (req, res) => {
