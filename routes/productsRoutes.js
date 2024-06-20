@@ -107,7 +107,7 @@ routes.post('/search/:id', async (req, res) => {
     } else {
         result = products
     }
-    const pagination = Pagination.format(result, req.query, 'products/search/:id');
+    const pagination = Pagination.format(result, req.query, 'products/search/' + req.params.id);
     const items = formatJSON(result, req.query);
 
     res.json({
