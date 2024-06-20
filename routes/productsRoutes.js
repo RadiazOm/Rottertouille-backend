@@ -1,5 +1,5 @@
 import express from "express";
-import dummy from '../dummyproducts.json' assert { type: 'json' };
+import dummy from '../dummyproducts.json' assert {type: 'json'};
 import Pagination from "../pagination/Pagination.js";
 import Product from "../models/products.js";
 import Supermarket from "../models/supermarket.js";
@@ -7,7 +7,7 @@ import Supermarket from "../models/supermarket.js";
 const routes = express.Router()
 
 // cors stuff
-routes.options('/', function(req, res){
+routes.options('/', function (req, res) {
     res.header('Allow', 'GET');
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET');
@@ -16,7 +16,7 @@ routes.options('/', function(req, res){
 });
 
 // cors stuff
-routes.options('/search', function(req, res){
+routes.options('/search', function (req, res) {
     res.header('Allow', 'POST');
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'POST');
@@ -76,12 +76,31 @@ routes.post('/search', (req, res) => {
     }
 
     const filter = req.body.query
-    
-    const result = dummy.products.filter((item) => {return item.name.includes(filter)})
+
+    const result = dummy.products.filter((item) => {
+        return item.name.includes(filter)
+    })
 
     const pagination = Pagination.format(result, req.query, 'products/search')
 
     const items = formatJSON(result, req.query)
+
+    res.json({
+        products: items,
+        pagination: pagination
+    })
+})
+
+routes.post('search/:id', async (req, res) => {
+    const supermarket = await Supermarket.findOne({_id: req.params.id});
+    const products = await Product.findById(supermarket).exec();
+
+    const filter = req.body.query
+    const result = products.filter((item) => {
+        return item.name.includes(filter)
+    });
+    const pagination = Pagination.format(result, req.query, 'products/search/:id');
+    const items = formatJSON(result, req.query);
 
     res.json({
         products: items,
