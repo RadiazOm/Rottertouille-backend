@@ -99,9 +99,14 @@ routes.post('/search/:id', async (req, res) => {
 
 
     const filter = req.body.query
-    const result = products.filter((item) => {
-        return item.name.includes(filter)
-    });
+    let result
+    if (filter) {
+        result = products.filter((item) => {
+            return item.name.toLowerCase().includes(filter.toLowerCase())
+        });
+    } else {
+        result = products
+    }
     const pagination = Pagination.format(result, req.query, 'products/search/:id');
     const items = formatJSON(result, req.query);
 
