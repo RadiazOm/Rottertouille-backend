@@ -33,7 +33,7 @@ routes.use((req, res, next) => {
 
 // Get all the products
 routes.get('/', async (req, res) => {
-    const products = await Product.find()
+    const products = await Product.find().sort({'price': "asc"})
 
     for (let i = 0; i < products.length; i++) {
         const supermarket = await Supermarket.findOne({'_id': products[i].supermarket})
@@ -68,22 +68,20 @@ routes.get('/:id', async (req, res) => {
 
 // Get all the products with a filter
 routes.post('/search', (req, res) => {
-    if (Object.keys(req.body).length === 0) {
-        res.status(400).json({
-            message: 'invalid format: body is empty.'
-        })
-        return
-    }
+    const products = Product.find().sort({'price': "asc"})
 
     const filter = req.body.query
 
-    const result = dummy.products.filter((item) => {
-        return item.name.includes(filter)
-    })
-
-    const pagination = Pagination.format(result, req.query, 'products/search')
-
-    const items = formatJSON(result, req.query)
+    let result
+    if (filter) {
+        result = products.filter((item) => {
+            return item.name.toLowerCase().includes(filter.toLowerCase())
+        });
+    } else {
+        result = products
+    }
+    const pagination = Pagination.format(result, req.query, 'products/search');
+    const items = formatJSON(result, req.query);
 
     res.json({
         products: items,
