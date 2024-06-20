@@ -93,7 +93,10 @@ routes.post('/search', (req, res) => {
 
 routes.post('/search/:id', async (req, res) => {
     const supermarket = await Supermarket.findOne({_id: req.params.id});
-    const products = await Product.findById(supermarket).exec();
+    console.log(supermarket);
+    const products = await Product.find({"supermarket": supermarket});
+    console.log(products);
+
 
     const filter = req.body.query
     const result = products.filter((item) => {
