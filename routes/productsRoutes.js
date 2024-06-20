@@ -92,7 +92,7 @@ routes.post('/search', (req, res) => {
 routes.post('/search/:id', async (req, res) => {
     const supermarket = await Supermarket.findOne({_id: req.params.id});
     console.log(supermarket);
-    const products = await Product.find({"supermarket": supermarket});
+    const products = await Product.find({"supermarket": supermarket}).sort({"price": "asc"});
     console.log(products);
 
 
