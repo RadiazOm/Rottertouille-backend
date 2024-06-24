@@ -124,14 +124,11 @@ routes.post('/search/:id', async (req, res) => {
     console.log(products);
 
     for (let i = 0; i < products.length; i++) {
-        const supermarket = await Supermarket.findOne({'_id': products[i].supermarket})
         if (products[i]?.discount) {
             const discount = await Discount.findOne({'_id': products[i].discount})
 
             products[i].discount = discount
         }
-
-        console.log(supermarket)
 
         products[i].supermarket = supermarket
     }
