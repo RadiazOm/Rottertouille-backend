@@ -33,7 +33,7 @@ routes.use((req, res, next) => {
 
 // Get all the products
 routes.get('/', async (req, res) => {
-    const products = await Product.find().sort({'price': "asc"})
+    const products = await Product.find().sort({'price': "asc"}).limit(100)
 
     for (let i = 0; i < products.length; i++) {
         const supermarket = await Supermarket.findOne({'_id': products[i].supermarket})
@@ -68,7 +68,7 @@ routes.get('/:id', async (req, res) => {
 
 // Get all the products with a filter
 routes.post('/search', (req, res) => {
-    const products = Product.find().sort({'price': "asc"})
+    const products = Product.find().sort({'price': "asc"}).limit(100)
 
     const filter = req.body.query
 
@@ -92,7 +92,7 @@ routes.post('/search', (req, res) => {
 routes.post('/search/:id', async (req, res) => {
     const supermarket = await Supermarket.findOne({_id: req.params.id});
     console.log(supermarket);
-    const products = await Product.find({"supermarket": supermarket}).sort({"price": "asc"});
+    const products = await Product.find({"supermarket": supermarket}).sort({"price": "asc"}).limit(100);
     console.log(products);
 
 
