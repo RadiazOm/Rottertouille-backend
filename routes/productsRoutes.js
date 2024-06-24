@@ -34,7 +34,7 @@ routes.use((req, res, next) => {
 
 // Get all the products
 routes.get('/', async (req, res) => {
-    const products = await Product.find().sort({'price': "asc"}).sort({'discount': 1}).limit(100)
+    const products = await Product.find().sort({'discount': 1, 'price': "asc"}).limit(100)
 
     for (let i = 0; i < products.length; i++) {
         const supermarket = await Supermarket.findOne({'_id': products[i].supermarket})
