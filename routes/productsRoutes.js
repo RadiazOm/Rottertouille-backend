@@ -74,18 +74,20 @@ routes.get('/:id', async (req, res) => {
 
 // Get all the products with a filter
 routes.post('/search', (req, res) => {
-    const products = Product.find().sort({'price': "asc"}).limit(100)
+    const products = Product.find({"name": { '$regex' : req.body.query, '$options' : 'i' } }).sort({'price': "asc"})
 
     const filter = req.body.query
 
-    let result
-    if (filter) {
-        result = products.filter((item) => {
-            return item.name.toLowerCase().includes(filter.toLowerCase())
-        });
-    } else {
-        result = products
-    }
+    let result = products
+
+    // let result
+    // if (filter) {
+    //     result = products.filter((item) => {
+    //         return item.name.toLowerCase().includes(filter.toLowerCase())
+    //     });
+    // } else {
+    //     result = products
+    // }
     const pagination = Pagination.format(result, req.query, 'products/search');
     const items = formatJSON(result, req.query);
 
@@ -96,21 +98,29 @@ routes.post('/search', (req, res) => {
 })
 
 routes.post('/search/:id', async (req, res) => {
+    if (Object.keys(req.body).length === 0) {
+        res.status(400).json({
+            message: 'invalid format: body is empty.'
+        })
+        return
+    }
+
     const supermarket = await Supermarket.findOne({_id: req.params.id});
     console.log(supermarket);
-    const products = await Product.find({"supermarket": supermarket}).sort({"price": "asc"}).limit(100);
+    const products = await Product.find({"supermarket": supermarket, "name": { '$regex' : req.body.query, '$options' : 'i' } }).sort({"price": "asc"})
     console.log(products);
 
+    let result = products
 
-    const filter = req.body.query
-    let result
-    if (filter) {
-        result = products.filter((item) => {
-            return item.name.toLowerCase().includes(filter.toLowerCase())
-        });
-    } else {
-        result = products
-    }
+    // const filter = req.body.query
+    // let result
+    // if (filter) {
+    //     result = products.filter((item) => {
+    //         return item.name.toLowerCase().includes(filter.toLowerCase())
+    //     });
+    // } else {
+    //     result = products
+    // }
     const pagination = Pagination.format(result, req.query, 'products/search/' + req.params.id);
     const items = formatJSON(result, req.query);
 
