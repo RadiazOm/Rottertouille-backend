@@ -2,6 +2,7 @@ import express from "express";
 import dummy from '../dummyrecipes.json' assert { type: 'json' };
 import Pagination from "../pagination/Pagination.js";
 import Recipe from "../models/recipes.js";
+import Product from "../models/products.js";
 
 const routes = express.Router()
 
@@ -33,6 +34,19 @@ routes.use((req, res, next) => {
 // Get all the recipes
 routes.get('/', async (req, res) => {
     const recipes = await Recipe.find()
+
+    for (let i = 0; i < recipes.length; i++) {
+        let ingredients = []
+        for (let j = 0; j < recipes[i].ingredients.length; j++) {
+            const product = await Product.find({"_id": recipes[i].ingredients[j]})
+
+            console.log(product)
+
+            recipes[i].ingredients.splice(j, 1)
+            ingredients.push(product)
+        }
+        recipes[i].ingredients = ingredients
+    }
 
     const pagination = Pagination.format(recipes, req.query, 'recipes')
 
