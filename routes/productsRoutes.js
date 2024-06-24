@@ -3,6 +3,7 @@ import dummy from '../dummyproducts.json' assert {type: 'json'};
 import Pagination from "../pagination/Pagination.js";
 import Product from "../models/products.js";
 import Supermarket from "../models/supermarket.js";
+import Discount from "../models/discounts.js";
 
 const routes = express.Router()
 
@@ -33,10 +34,15 @@ routes.use((req, res, next) => {
 
 // Get all the products
 routes.get('/', async (req, res) => {
-    const products = await Product.find().sort({'price': "asc"}).limit(100)
+    const products = await Product.find().sort({'price': "asc"}).sort({'discount': 1}).limit(100)
 
     for (let i = 0; i < products.length; i++) {
         const supermarket = await Supermarket.findOne({'_id': products[i].supermarket})
+        if (products[i]?.discount) {
+            const discount = await Discount.findOne({'_id': products[i].discount})
+
+            products[i].discount = discount
+        }
 
         console.log(supermarket)
 
@@ -136,6 +142,7 @@ routes.post('/insert', async (req, res) => {
         res.json({
             product: product
         })
+        console.log('got: ' + req.body.name + ' with discount: ' + req.body.discount)
     } catch (error) {
         console.log('wuh oh something went very wrong: ' + error)
         res.status(500).json({
