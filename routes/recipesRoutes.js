@@ -123,6 +123,16 @@ routes.post('/search', (req, res) => {
     })
 })
 
+routes.delete('/reset', async (req, res) => {
+    const reset = await Recipe.deleteMany()
+
+    console.log(reset)
+
+    res.send({
+        message: 'deleted recipe database'
+    })
+})
+
 function formatJSON(data, query) {
     let JSON = [];
     let start = query.start - 1
