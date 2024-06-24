@@ -74,7 +74,7 @@ routes.get('/:id', async (req, res) => {
 
 // Get all the products with a filter
 routes.post('/search', async (req, res) => {
-    const products = await Product.find({"name": { '$regex' : req.body.query, '$options' : 'i' } }).sort({'price': "asc"})
+    const products = await Product.find({"name": { '$regex' : req.body.query, '$options' : 'i' } }).sort({'price': "asc"}).limit(100)
 
     const filter = req.body.query
 
@@ -120,7 +120,7 @@ routes.post('/search/:id', async (req, res) => {
 
     const supermarket = await Supermarket.findOne({_id: req.params.id});
     console.log(supermarket);
-    const products = await Product.find({"supermarket": supermarket, "name": { '$regex' : req.body.query, '$options' : 'i' } }).sort({"price": "asc"})
+    const products = await Product.find({"supermarket": supermarket, "name": { '$regex' : req.body.query, '$options' : 'i' } }).sort({"price": "asc"}).limit(100)
     console.log(products);
 
     for (let i = 0; i < products.length; i++) {
