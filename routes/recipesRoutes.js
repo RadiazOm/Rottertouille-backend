@@ -33,24 +33,28 @@ routes.use((req, res, next) => {
 
 // Get all the recipes
 routes.get('/', async (req, res) => {
-    const recipes = await Recipe.find()
+    let recipes = await Recipe.find()
+
+    let recipesClone = recipes
 
     for (let i = 0; i < recipes.length; i++) {
-        let ingredients = []
+        let ingredientsList = []
         for (let j = 0; j < recipes[i].ingredients.length; j++) {
-            const product = await Product.find({"_id": recipes[i].ingredients[j]})
+            const product = await Product.findOne({"_id": recipes[i].ingredients[j]})
 
-            console.log(product)
+            // console.log(recipes[i].ingredients)
 
-            recipes[i].ingredients.splice(j, 1)
-            ingredients.push(product)
+            console.log(recipes[i].ingredients[j])
+
+            ingredientsList.push(product)
         }
-        recipes[i].ingredients = ingredients
+        console.log(ingredientsList)
+        recipesClone[i].ingredients = ingredientsList
     }
 
-    const pagination = Pagination.format(recipes, req.query, 'recipes')
+    const pagination = Pagination.format(recipesClone, req.query, 'recipes')
 
-    const items = formatJSON(recipes, req.query)
+    const items = formatJSON(recipesClone, req.query)
 
     res.json({
         recipes: items,
