@@ -4,14 +4,10 @@ const { Schema } = mongoose
 const productSchema = new Schema({
     name: String,
     weight: String,
-    category: [
-        { type: Schema.Types.ObjectId, ref: 'Category'} // foreign key
-    ], 
+    category: { type: Schema.Types.ObjectId, ref: 'Category'}, // foreign key
     supermarket: { type: Schema.Types.ObjectId, ref: 'Supermarket'}, // foreign key
     price: Number,
-    discount: [
-        { type: Schema.Types.ObjectId, ref: 'Discount'} // foreign key
-    ], 
+    discount: { type: Schema.Types.ObjectId, ref: 'Discount'}, // foreign key,
     image_url: String,
     createdAt: {
         type: Date,

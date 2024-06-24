@@ -6,6 +6,7 @@ import supermarketsRoutes from './routes/supermarketRoutes.js'
 import recipesRoutes from './routes/recipesRoutes.js'
 import imageRoute from './routes/image.js'
 import seedRoute from './routes/seeder.js'
+import discountRoutes from './routes/discountsRoutes.js'
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/products', productsRoutes)
 app.use('/supermarkets', supermarketsRoutes)
 app.use('/recipes', recipesRoutes)
 app.use('/image', imageRoute)
+app.use('/discount', discountRoutes)
 
 // error handling
 app.use(function errorHandler(err, req, res, next) { res.send('error happened ' + err.message); console.log('ERROR: ' + err.message) });
