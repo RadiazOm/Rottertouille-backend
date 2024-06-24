@@ -69,6 +69,33 @@ routes.get('/:id', async (req, res) => {
     })
 })
 
+routes.post('/insert', async (req, res) => {
+    if (Object.keys(req.body).length === 0) {
+        res.status(400).json({
+            message: 'invalid format: body is empty.'
+        })
+        return
+    }
+
+    try {
+        const recipe = await Recipe.create({
+            name: req.body.name,
+            ingredients: req.body.ingredients,
+            instructions: req.body.instructions,
+            image_url: req.body.image_url
+        })
+
+        res.json({
+            recipe: recipe
+        })
+    } catch (error) {
+        console.log('wuh oh something went very wrong: ' + error)
+        res.status(500).json({
+            message: 'uh oh something went wrong'
+        })
+    }
+})
+
 // Get all the recipes with a filter
 routes.post('/search', (req, res) => {
     if (Object.keys(req.body).length === 0) {

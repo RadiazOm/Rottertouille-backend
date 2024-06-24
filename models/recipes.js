@@ -4,11 +4,9 @@ const { Schema } = mongoose
 const recipeSchema = new Schema({
     name: String,
     ingredients: [
-        { type: Schema.Types.ObjectId, ref: 'Ingredient' } // foreign key
+        { type: Schema.Types.ObjectId, ref: 'Product' } // foreign key
     ],
-    instructions: [
-        { type: Schema.Types.ObjectId, ref: 'Instruction' } // foreign key
-    ],
+    instructions: String,
     image_url: String,
     createdAt: {
         type: Date,
